@@ -75,6 +75,8 @@ public class Dictionary {
 
 	private DictSegment _StopWords;
 
+	private DictSegment _EnglishDict;
+
 	/**
 	 * 配置对象
 	 */
@@ -85,6 +87,7 @@ public class Dictionary {
 	private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
 
 	private static final String PATH_DIC_MAIN = "main.dic";
+	private static final String PATH_DIC_ENGLISH = "standard_english_word.dic";
 	private static final String PATH_DIC_SURNAME = "surname.dic";
 	private static final String PATH_DIC_QUANTIFIER = "quantifier.dic";
 	private static final String PATH_DIC_SUFFIX = "suffix.dic";
@@ -149,6 +152,7 @@ public class Dictionary {
 
 					singleton = new Dictionary(cfg);
 					singleton.loadMainDict();
+					singleton.loadEnglishDict();
 					singleton.loadSurnameDict();
 					singleton.loadQuantifierDict();
 					singleton.loadSuffixDict();
@@ -332,6 +336,15 @@ public class Dictionary {
 	}
 
 	/**
+	 * 检索匹配英语词典
+	 *
+	 * @return Hit 匹配结果描述
+	 */
+	public Hit matchInEnglishDict(char[] charArray) {
+		return singleton._EnglishDict.match(charArray);
+	}
+
+	/**
 	 * 检索匹配主词典
 	 * 
 	 * @return Hit 匹配结果描述
@@ -391,6 +404,18 @@ public class Dictionary {
 		this.loadExtDict();
 		// 加载远程自定义词库
 		this.loadRemoteExtDict();
+	}
+
+	/**
+	 * 加载本地英语词典
+	 */
+	private void loadEnglishDict() {
+		// 建立一个英文词典实例
+		_EnglishDict = new DictSegment((char) 0);
+
+		// 读取英文词典文件
+		Path file = PathUtils.get(getDictRoot(), Dictionary.PATH_DIC_ENGLISH);
+		loadDictFile(_EnglishDict, file, false, "English Dict");
 	}
 
 	/**
