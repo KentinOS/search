@@ -392,5 +392,37 @@ class AnalyzeContext {
 
 		}
 	}
-	
+
+
+	/**
+	 *
+	 * @param begin(include)
+	 * @param end(exclude)
+	 * @return
+	 */
+	char[] getLexemeText(int begin , int end) {
+		if (null == this.segmentBuff || begin < 0 || begin > this.segmentBuff.length || end < 0 || end > this.segmentBuff.length || begin >= end) {
+			return new char[0];
+		}
+		char[] lexemeText = new char[end - begin];
+		System.arraycopy(this.segmentBuff, begin, lexemeText, 0, lexemeText.length);
+		return lexemeText;
+	}
+
+	boolean allowEnglishPrefix() {
+		return this.cfg.isEnableEnglishPrefix();
+	}
+
+	boolean allowEnglishSuffix() {
+		return this.cfg.isEnableEnglishSuffix();
+	}
+
+	boolean allowArabicPrefix() {
+		return this.cfg.isEnableArabicPrefix();
+	}
+
+	boolean allowArabicSuffix() {
+		return this.cfg.isEnableArabicSuffix();
+	}
+
 }
