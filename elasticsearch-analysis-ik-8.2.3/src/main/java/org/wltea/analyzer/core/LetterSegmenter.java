@@ -28,7 +28,6 @@ import org.wltea.analyzer.dic.Dictionary;
 import org.wltea.analyzer.dic.Hit;
 
 import java.util.Arrays;
-import java.util.Set;
 
 /**
  * 
