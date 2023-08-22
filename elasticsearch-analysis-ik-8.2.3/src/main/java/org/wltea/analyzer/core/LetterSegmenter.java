@@ -312,35 +312,23 @@ class LetterSegmenter implements ISegmenter {
 		Lexeme newLexeme = new Lexeme(bufferOffset, this.arabicStart , length, Lexeme.TYPE_ARABIC);
 		context.addLexeme(newLexeme);
 		if (length > SEGMENT_LETTER_DEAL_MAX_LENGTH) {
-			char[] lexemeText = context.getLexemeText(this.arabicStart, this.arabicEnd + 1);
-			if (isNumberic(lexemeText)) {
-				if (context.allowArabicSuffix()) {
-					int arabicSuffixMaxLength = Math.min(ARABIC_SUFFIX_MAX_LENGTH, length);
-					int arabicSuffixMinLength = Math.max(ARABIC_SUFFIX_MIN_LENGTH, 0);
-					for (int lth = arabicSuffixMinLength; lth <= arabicSuffixMaxLength; lth++) {
-						context.addLexeme(new Lexeme(bufferOffset, this.arabicEnd + 1 - lth, lth, Lexeme.TYPE_ARABIC));
-					}
+			if (context.allowArabicSuffix()) {
+				int arabicSuffixMaxLength = Math.min(ARABIC_SUFFIX_MAX_LENGTH, length);
+				int arabicSuffixMinLength = Math.max(ARABIC_SUFFIX_MIN_LENGTH, 0);
+				for (int lth = arabicSuffixMinLength; lth <= arabicSuffixMaxLength; lth++) {
+					context.addLexeme(new Lexeme(bufferOffset, this.arabicEnd + 1 - lth, lth, Lexeme.TYPE_ARABIC));
 				}
-				if (context.allowArabicPrefix()) {
-					int arabicPrefixMaxLength = Math.min(ARABIC_PREFIX_MAX_LENGTH, length);
-					int arabicPrefixMinLength = Math.max(ARABIC_PREFIX_MIN_LENGTH, 0);
-					for (int lth = arabicPrefixMinLength; lth <= arabicPrefixMaxLength; lth++) {
-						context.addLexeme(new Lexeme(bufferOffset, this.arabicStart, lth, Lexeme.TYPE_ARABIC));
-					}
+			}
+			if (context.allowArabicPrefix()) {
+				int arabicPrefixMaxLength = Math.min(ARABIC_PREFIX_MAX_LENGTH, length);
+				int arabicPrefixMinLength = Math.max(ARABIC_PREFIX_MIN_LENGTH, 0);
+				for (int lth = arabicPrefixMinLength; lth <= arabicPrefixMaxLength; lth++) {
+					context.addLexeme(new Lexeme(bufferOffset, this.arabicStart, lth, Lexeme.TYPE_ARABIC));
 				}
 			}
 		}
 		this.arabicStart = -1;
 		this.arabicEnd = -1;
-	}
-
-	private boolean isNumberic(char[] lexemeText) {
-		for (char c : lexemeText) {
-			if (c > '9' || c < '0') {
-				return false;
-			}
-		}
-		return lexemeText.length > 0;
 	}
 
 	/**
