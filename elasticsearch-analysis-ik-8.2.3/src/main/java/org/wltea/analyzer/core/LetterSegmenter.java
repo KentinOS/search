@@ -240,22 +240,22 @@ class LetterSegmenter implements ISegmenter {
 		context.addLexeme(newLexeme);
 		if (length > SEGMENT_LETTER_DEAL_MAX_LENGTH) {
 			char[] lexemeText = context.getLexemeText(this.englishStart, this.englishStart + length);
-			if (context.allowEnglishSuffix()) {
-				int englishSuffixMaxLength = Math.min(ENGLISH_SUFFIX_MAX_LENGTH, length);
-				int englishSuffixMinLength = Math.max(ENGLISH_SUFFIX_MIN_LENGTH, 0);
-				for (int lth = englishSuffixMinLength; lth <= englishSuffixMaxLength; lth++) {
-					context.addLexeme(new Lexeme(bufferOffset, this.englishEnd + 1 - lth, lth, Lexeme.TYPE_ENGLISH));
-				}
-			}
 			//非标准单词才需要后缀
 			Hit hit = Dictionary.getSingleton().matchInEnglishDict(new String(lexemeText).toLowerCase().toCharArray());
 			if (!hit.isMatch()) {
-				if (context.allowEnglishPrefix()) {
-					int englishPrefixMaxLength = Math.min(ENGLISH_PREFIX_MAX_LENGTH, length);
-					int englishPrefixMinLength = Math.max(ENGLISH_PREFIX_MIN_LENGTH, 0);
-					for (int lth = englishPrefixMinLength; lth <= englishPrefixMaxLength; lth++) {
-						context.addLexeme(new Lexeme(bufferOffset, this.englishStart, lth, Lexeme.TYPE_ENGLISH));
+				if (context.allowEnglishSuffix()) {
+					int englishSuffixMaxLength = Math.min(ENGLISH_SUFFIX_MAX_LENGTH, length);
+					int englishSuffixMinLength = Math.max(ENGLISH_SUFFIX_MIN_LENGTH, 0);
+					for (int lth = englishSuffixMinLength; lth <= englishSuffixMaxLength; lth++) {
+						context.addLexeme(new Lexeme(bufferOffset, this.englishEnd + 1 - lth, lth, Lexeme.TYPE_ENGLISH));
 					}
+				}
+			}
+			if (context.allowEnglishPrefix()) {
+				int englishPrefixMaxLength = Math.min(ENGLISH_PREFIX_MAX_LENGTH, length);
+				int englishPrefixMinLength = Math.max(ENGLISH_PREFIX_MIN_LENGTH, 0);
+				for (int lth = englishPrefixMinLength; lth <= englishPrefixMaxLength; lth++) {
+					context.addLexeme(new Lexeme(bufferOffset, this.englishStart, lth, Lexeme.TYPE_ENGLISH));
 				}
 			}
 		}
