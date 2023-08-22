@@ -48,7 +48,7 @@ public class Configuration {
 		this.useSmart = settings.get("use_smart", "false").equals("true");
 		this.enableLowercase = settings.get("enable_lowercase", "true").equals("true");
 		this.enableRemoteDict = settings.get("enable_remote_dict", "true").equals("true");
-		this.enableArabicSuffix = settings.get("enable_arabic_prefix", "false").equals("true");
+		this.enableArabicPrefix = settings.get("enable_arabic_prefix", "false").equals("true");
 		this.enableArabicSuffix = settings.get("enable_arabic_suffix", "false").equals("true");
 		this.enableEnglishPrefix = settings.get("enable_english_prefix", "false").equals("true");
 		this.enableEnglishSuffix = settings.get("enable_english_suffix", "false").equals("true");
