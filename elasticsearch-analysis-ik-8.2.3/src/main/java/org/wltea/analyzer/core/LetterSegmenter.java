@@ -240,7 +240,7 @@ class LetterSegmenter implements ISegmenter {
 		context.addLexeme(newLexeme);
 		if (length > SEGMENT_LETTER_DEAL_MAX_LENGTH) {
 			char[] lexemeText = context.getLexemeText(this.englishStart, this.englishStart + length);
-			if (context.allowArabicSuffix()) {
+			if (context.allowEnglishSuffix()) {
 				int englishSuffixMaxLength = Math.min(ENGLISH_SUFFIX_MAX_LENGTH, length);
 				int englishSuffixMinLength = Math.max(ENGLISH_SUFFIX_MIN_LENGTH, 0);
 				for (int lth = englishSuffixMinLength; lth <= englishSuffixMaxLength; lth++) {

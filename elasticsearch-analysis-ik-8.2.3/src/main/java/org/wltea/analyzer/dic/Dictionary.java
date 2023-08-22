@@ -159,6 +159,8 @@ public class Dictionary {
 					singleton.loadPrepDict();
 					singleton.loadStopWordDict();
 
+					logger.info("LOADED => initial dictionary singleton finish : " + singleton.toString());
+
 					if(cfg.isEnableRemoteDict()){
 						// 建立监控线程
 						for (String location : singleton.getRemoteExtDictionarys()) {
@@ -592,10 +594,24 @@ public class Dictionary {
 		Dictionary tmpDict = new Dictionary(configuration);
 		tmpDict.configuration = getSingleton().configuration;
 		tmpDict.loadMainDict();
+		tmpDict.loadEnglishDict();
 		tmpDict.loadStopWordDict();
 		_MainDict = tmpDict._MainDict;
+		_EnglishDict = tmpDict._EnglishDict;
 		_StopWords = tmpDict._StopWords;
 		logger.info("reload ik dict finished.");
 	}
 
+	@Override
+	public String toString() {
+		return "Dictionary{" +
+				"_MainDict=" + _MainDict +
+				", _QuantifierDict=" + _QuantifierDict +
+				", _StopWords=" + _StopWords +
+				", _EnglishDict=" + _EnglishDict +
+				", configuration=" + configuration +
+				", conf_dir=" + conf_dir +
+				", props=" + props +
+				'}';
+	}
 }

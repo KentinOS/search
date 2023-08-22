@@ -327,7 +327,7 @@ class AnalyzeContext {
     			result = this.results.pollFirst(); 				
     		}else{
 	 			//不是停止词, 生成lexeme的词元文本,输出
-	    		result.setLexemeText(String.valueOf(segmentBuff , result.getBegin() , result.getLength()));
+	    		result.setLexemeText(String.valueOf(this.segmentBuff , result.getBegin() , result.getLength()));
 	    		break;
     		}
 		}
